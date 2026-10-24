@@ -1,0 +1,6 @@
+{
+  "name": "Cap sur le Bourget",
+  "description": "Plateforme citoyenne et bénévole de covoiturage pour le rassemblement du 7 novembre au Bourget.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
