@@ -50,7 +50,7 @@ const MainContent: React.FC = () => {
       {/* 5. Barre de navigation mobile ergonomique */}
       <MobileBottomNav />
 
-      {/* 6. Lecteur de musique populaire intégré (HK - On lâche rien) */}
+      {/* 6. Lecteur de musique populaire intégré (Rød - L'Avenir en commun) */}
       <MusicPlayer />
 
       {/* 7. Notifications Toast */}

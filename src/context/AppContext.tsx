@@ -78,42 +78,45 @@ interface AppContextType {
   // Modale d'authentification
   isAuthModalOpen: boolean;
   setIsAuthModalOpen: (open: boolean) => void;
+
+  // Réinitialisation de test
+  resetTestData: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Persistance LocalStorage sécurisée
+  // Navigation
   const [currentPage, setCurrentPage] = useState<PageView>('accueil');
-  const [selectedTripId, setSelectedTripId] = useState<string | null>(null);
+  const [selectedTripId, setSelectedTripId] = useState<string | null>('trip-rouen-1');
 
   const [currentUser, setCurrentUser] = useState<UserProfile>(() => {
-    const saved = localStorage.getItem('csb_user');
+    const saved = localStorage.getItem('csb_v4_user');
     return saved ? JSON.parse(saved) : INITIAL_USER;
   });
 
   const [trips, setTrips] = useState<Trip[]>(() => {
-    const saved = localStorage.getItem('csb_trips');
+    const saved = localStorage.getItem('csb_v4_trips');
     return saved ? JSON.parse(saved) : INITIAL_TRIPS;
   });
 
   const [bookings, setBookings] = useState<Booking[]>(() => {
-    const saved = localStorage.getItem('csb_bookings');
+    const saved = localStorage.getItem('csb_v4_bookings');
     return saved ? JSON.parse(saved) : INITIAL_BOOKINGS;
   });
 
   const [conversations, setConversations] = useState<Conversation[]>(() => {
-    const saved = localStorage.getItem('csb_conversations');
+    const saved = localStorage.getItem('csb_v4_conversations');
     return saved ? JSON.parse(saved) : INITIAL_CONVERSATIONS;
   });
 
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
-    const saved = localStorage.getItem('csb_messages');
+    const saved = localStorage.getItem('csb_v4_messages');
     return saved ? JSON.parse(saved) : INITIAL_MESSAGES;
   });
 
   const [reports, setReports] = useState<ReportItem[]>(() => {
-    const saved = localStorage.getItem('csb_reports');
+    const saved = localStorage.getItem('csb_v4_reports');
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -135,28 +138,44 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Synchronisation LocalStorage
   useEffect(() => {
-    localStorage.setItem('csb_user', JSON.stringify(currentUser));
+    localStorage.setItem('csb_v4_user', JSON.stringify(currentUser));
   }, [currentUser]);
 
   useEffect(() => {
-    localStorage.setItem('csb_trips', JSON.stringify(trips));
+    localStorage.setItem('csb_v4_trips', JSON.stringify(trips));
   }, [trips]);
 
   useEffect(() => {
-    localStorage.setItem('csb_bookings', JSON.stringify(bookings));
+    localStorage.setItem('csb_v4_bookings', JSON.stringify(bookings));
   }, [bookings]);
 
   useEffect(() => {
-    localStorage.setItem('csb_conversations', JSON.stringify(conversations));
+    localStorage.setItem('csb_v4_conversations', JSON.stringify(conversations));
   }, [conversations]);
 
   useEffect(() => {
-    localStorage.setItem('csb_messages', JSON.stringify(messages));
+    localStorage.setItem('csb_v4_messages', JSON.stringify(messages));
   }, [messages]);
 
   useEffect(() => {
-    localStorage.setItem('csb_reports', JSON.stringify(reports));
+    localStorage.setItem('csb_v4_reports', JSON.stringify(reports));
   }, [reports]);
+
+  const resetTestData = () => {
+    setTrips(INITIAL_TRIPS);
+    setBookings(INITIAL_BOOKINGS);
+    setConversations(INITIAL_CONVERSATIONS);
+    setMessages(INITIAL_MESSAGES);
+    setCurrentUser(INITIAL_USER);
+    setActiveConversationId('conv-rouen-sarah');
+    setSelectedTripId('trip-rouen-1');
+    localStorage.removeItem('csb_v4_trips');
+    localStorage.removeItem('csb_v4_bookings');
+    localStorage.removeItem('csb_v4_conversations');
+    localStorage.removeItem('csb_v4_messages');
+    localStorage.removeItem('csb_v4_user');
+    showToast("Données réinitialisées : 1 trajet test et 1 messagerie test.", "info");
+  };
 
   const showToast = (message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') => {
     const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
@@ -405,7 +424,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         showToast,
         removeToast,
         isAuthModalOpen,
-        setIsAuthModalOpen
+        setIsAuthModalOpen,
+        resetTestData
       }}
     >
       {children}

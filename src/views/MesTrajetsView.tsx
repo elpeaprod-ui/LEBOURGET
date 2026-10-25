@@ -173,11 +173,7 @@ export const MesTrajetsView: React.FC = () => {
                     </button>
 
                     <button
-                      onClick={() => {
-                        if (confirm("Souhaites-tu vraiment annuler ta réservation ?")) {
-                          cancelBooking(b.id);
-                        }
-                      }}
+                      onClick={() => cancelBooking(b.id)}
                       className="text-xs font-semibold uppercase text-red-400 hover:text-red-300 border border-red-500/30 px-3 py-1.5 rounded-lg transition"
                     >
                       Annuler
@@ -269,11 +265,7 @@ export const MesTrajetsView: React.FC = () => {
                         Voir la fiche →
                       </button>
                       <button
-                        onClick={() => {
-                          if (confirm("Es-tu sûr de vouloir supprimer cette annonce ?")) {
-                            deleteTrip(trip.id);
-                          }
-                        }}
+                        onClick={() => deleteTrip(trip.id)}
                         className="text-red-400 hover:text-red-300 font-semibold uppercase flex items-center gap-1 transition"
                       >
                         <Trash2 className="w-3.5 h-3.5" />

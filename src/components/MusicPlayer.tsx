@@ -7,7 +7,7 @@ export const MusicPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const youtubeVideoId = "ysF7Tcw4HbY";
-  const songTitle = "HK & Les Saltimbanks — « On lâche rien ! »";
+  const songTitle = "Rød — « L'Avenir en commun »";
 
   return (
     <>
@@ -25,7 +25,7 @@ export const MusicPlayer: React.FC = () => {
               ? 'bg-[#0E1528] text-white border-red-500/60 shadow-[0_0_20px_rgba(228,0,43,0.35)]'
               : 'bg-[#0A0F1D] text-slate-300 border-white/10 hover:border-white/25 hover:text-white'
           }`}
-          title="L'Autoradio populaire : HK - On lâche rien"
+          title="L'Autoradio populaire : Rød — L'Avenir en commun"
           aria-label="Lecteur musique de route"
         >
           {/* Animated Equalizer Wave Bars */}
@@ -40,7 +40,7 @@ export const MusicPlayer: React.FC = () => {
             <span className="font-heading font-bold text-white text-xs tracking-tight">Autoradio</span>
             <span className="text-slate-500 text-[10px]">·</span>
             <span className="text-slate-300 text-[11px] truncate max-w-[130px] sm:max-w-[190px]">
-              On lâche rien !
+              L'Avenir en commun
             </span>
           </div>
 
@@ -76,7 +76,7 @@ export const MusicPlayer: React.FC = () => {
 
               <div className="flex items-center gap-1.5">
                 <a
-                  href={`https://www.youtube.com/watch?v=${youtubeVideoId}`}
+                  href="https://www.youtube.com/results?search_query=R%C3%B8d+L%27avenir+en+commun"
                   target="_blank"
                   rel="noreferrer"
                   className="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition"
@@ -98,7 +98,7 @@ export const MusicPlayer: React.FC = () => {
             <div className="relative aspect-video bg-black">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${youtubeVideoId}?autoplay=1&rel=0&modestbranding=1`}
-                title="HK et Les Saltimbanks - On lâche rien"
+                title="Rød - L'Avenir en commun"
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
