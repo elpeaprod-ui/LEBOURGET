@@ -59,6 +59,7 @@ export interface Trip {
 export interface Booking {
   id: string;
   trajetId: string;
+  conducteurId: string;
   passagerId: string;
   passagerNom: string;
   passagerTel: string;
@@ -66,6 +67,7 @@ export interface Booking {
   statut: BookingStatus;
   messagePassager?: string;
   dateReservation: string;
+  createdAt?: string; // ISO, pour le tri
 }
 
 export interface ChatMessage {
@@ -75,7 +77,8 @@ export interface ChatMessage {
   expediteurId: string;
   expediteurNom: string;
   texte: string;
-  timestamp: string;
+  timestamp: string; // affichage (HH:mm)
+  createdAt?: string; // ISO, pour le tri
   isRead?: boolean;
 }
 
@@ -83,6 +86,7 @@ export interface Conversation {
   id: string;
   trajetId: string;
   trajetTitre: string;
+  participantIds: string[];
   participants: {
     id: string;
     nom: string;
@@ -90,6 +94,7 @@ export interface Conversation {
   }[];
   dernierMessage: string;
   derniereDate: string;
+  derniereDateISO?: string;
   unreadCount?: number;
 }
 

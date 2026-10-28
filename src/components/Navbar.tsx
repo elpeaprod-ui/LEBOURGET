@@ -13,7 +13,10 @@ export const Navbar: React.FC = () => {
     currentUser, 
     unreadCount, 
     bookings, 
-    trips
+    trips,
+    isLoggedIn,
+    setIsAuthModalOpen,
+    logOut
   } = useApp();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -121,21 +124,38 @@ export const Navbar: React.FC = () => {
           </button>
 
           {/* Profil Utilisateur Mac-style Glass Pill */}
-          <button
-            onClick={() => navigateTo('profil')}
-            className="ml-2 flex items-center gap-2.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 px-3 py-1.5 rounded-xl transition-all duration-200 text-left"
-            title="Mon profil et coordonnées"
-          >
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#E4002B] to-red-800 text-white font-bold text-xs flex items-center justify-center">
-              {currentUser.prenom[0]}
-            </div>
-            <div className="text-left leading-tight hidden xl:block">
-              <div className="text-xs font-semibold text-slate-200">{currentUser.prenom}</div>
-              <div className="text-[10px] text-emerald-400 font-mono">
-                {currentUser.emailVerified ? 'Vérifié' : 'À valider'}
-              </div>
-            </div>
-          </button>
+          {isLoggedIn ? (
+            <>
+              <button
+                onClick={() => navigateTo('profil')}
+                className="ml-2 flex items-center gap-2.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 px-3 py-1.5 rounded-xl transition-all duration-200 text-left"
+                title="Mon profil et coordonnées"
+              >
+                <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#E4002B] to-red-800 text-white font-bold text-xs flex items-center justify-center uppercase">
+                  {currentUser.prenom[0]}
+                </div>
+                <div className="text-left leading-tight hidden xl:block">
+                  <div className="text-xs font-semibold text-slate-200">{currentUser.prenom}</div>
+                  <div className={`text-[10px] font-mono ${currentUser.emailVerified ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    {currentUser.emailVerified ? 'Vérifié' : 'À valider'}
+                  </div>
+                </div>
+              </button>
+              <button
+                onClick={logOut}
+                className="px-2.5 py-1.5 text-[11px] font-semibold text-slate-400 hover:text-white rounded-lg hover:bg-white/[0.05] transition"
+              >
+                Déconnexion
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => setIsAuthModalOpen(true)}
+              className="ml-2 bg-[#E4002B] hover:bg-red-600 text-white px-4 py-1.5 text-xs font-bold uppercase rounded-xl transition"
+            >
+              Connexion
+            </button>
+          )}
         </nav>
 
         {/* Actions & Menu Mobile */}
@@ -162,21 +182,40 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#0A0E1A] border-t border-white/[0.08] px-4 py-4 space-y-3">
           <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#E4002B] text-white font-bold flex items-center justify-center">
-                {currentUser.prenom[0]}
-              </div>
-              <div>
-                <div className="font-semibold text-sm text-white">{currentUser.prenom} {currentUser.nom}</div>
-                <div className="text-xs text-slate-400">{currentUser.email}</div>
-              </div>
-            </div>
-            <button 
-              onClick={() => navigateTo('profil')} 
-              className="text-xs font-semibold text-red-400 uppercase tracking-wide hover:underline"
-            >
-              Mon profil
-            </button>
+            {isLoggedIn ? (
+              <>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-[#E4002B] text-white font-bold flex items-center justify-center uppercase">
+                    {currentUser.prenom[0]}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm text-white">{currentUser.prenom} {currentUser.nom}</div>
+                    <div className="text-xs text-slate-400">{currentUser.email}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => navigateTo('profil')}
+                    className="text-xs font-semibold text-red-400 uppercase tracking-wide hover:underline"
+                  >
+                    Mon profil
+                  </button>
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); logOut(); }}
+                    className="text-xs font-semibold text-slate-400 hover:text-white"
+                  >
+                    Déconnexion
+                  </button>
+                </div>
+              </>
+            ) : (
+              <button
+                onClick={() => { setMobileMenuOpen(false); setIsAuthModalOpen(true); }}
+                className="w-full bg-[#E4002B] text-white px-4 py-2.5 text-xs font-bold uppercase rounded-xl"
+              >
+                Connexion / Inscription
+              </button>
+            )}
           </div>
 
           <div className="grid grid-cols-1 gap-1.5 font-medium text-sm">

@@ -4,7 +4,7 @@ import { useApp } from '../context/AppContext';
 import { ShieldCheck, Scale, Heart, AlertTriangle, ExternalLink, ArrowRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { setCurrentPage, resetTestData } = useApp();
+  const { setCurrentPage } = useApp();
 
   return (
     <footer className="bg-[#05070E] text-slate-400 text-xs py-12 border-t border-white/[0.08]">
@@ -159,14 +159,6 @@ export const Footer: React.FC = () => {
           <span>·</span>
           <button onClick={() => setCurrentPage('signalement')} className="hover:text-slate-300 transition">
             Modération citoyenne
-          </button>
-          <span>·</span>
-          <button 
-            onClick={resetTestData} 
-            className="text-slate-500 hover:text-red-400 font-mono transition"
-            title="Rétablir 1 trajet test et 1 messagerie test"
-          >
-            ↺ Réinitialiser données de test
           </button>
         </div>
       </div>

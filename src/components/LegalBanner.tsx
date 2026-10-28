@@ -4,7 +4,7 @@ import { useApp } from '../context/AppContext';
 import { AlertCircle, ShieldCheck, MailCheck, MailWarning } from 'lucide-react';
 
 export const LegalBanner: React.FC = () => {
-  const { currentUser, toggleEmailVerified } = useApp();
+  const { currentUser, isLoggedIn, refreshEmailVerified, resendVerification } = useApp();
 
   return (
     <div className="bg-[#070D1E] text-slate-300 text-xs border-b border-slate-800">
@@ -25,28 +25,32 @@ export const LegalBanner: React.FC = () => {
             {EVENT_CONFIG.disclaimer.provisional}
           </span>
 
-          {/* Simulateur de statut email pour tests et conformité */}
-          <button
-            onClick={toggleEmailVerified}
-            title="Cliquer pour simuler la validation du lien d'email"
-            className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase transition ${
-              currentUser.emailVerified
-                ? 'bg-emerald-950/70 text-emerald-400 border border-emerald-700/60 hover:bg-emerald-900'
-                : 'bg-red-950/70 text-red-300 border border-red-700/60 hover:bg-red-900 animate-bounce'
-            }`}
-          >
-            {currentUser.emailVerified ? (
-              <>
+          {/* Statut de confirmation de l'email */}
+          {isLoggedIn && (
+            currentUser.emailVerified ? (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase bg-emerald-950/70 text-emerald-400 border border-emerald-700/60">
                 <MailCheck className="w-3 h-3 text-emerald-400" />
-                Email confirmé (lien vérifié)
-              </>
+                Email confirmé
+              </span>
             ) : (
-              <>
-                <MailWarning className="w-3 h-3 text-red-400" />
-                Email en attente de confirmation
-              </>
-            )}
-          </button>
+              <span className="inline-flex items-center gap-2">
+                <button
+                  onClick={refreshEmailVerified}
+                  title="Clique après avoir validé le lien reçu par email"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase transition bg-red-950/70 text-red-300 border border-red-700/60 hover:bg-red-900"
+                >
+                  <MailWarning className="w-3 h-3 text-red-400" />
+                  Email à confirmer : j'ai cliqué sur le lien
+                </button>
+                <button
+                  onClick={resendVerification}
+                  className="text-[10px] underline underline-offset-2 text-slate-400 hover:text-white"
+                >
+                  Renvoyer l'email
+                </button>
+              </span>
+            )
+          )}
         </div>
       </div>
     </div>

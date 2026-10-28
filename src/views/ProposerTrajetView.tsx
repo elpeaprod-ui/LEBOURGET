@@ -11,7 +11,7 @@ import {
 import { CalculateurPrixJuste } from '../components/CalculateurPrixJuste';
 
 export const ProposerTrajetView: React.FC = () => {
-  const { currentUser, addTrip, setCurrentPage, setSelectedTripId, showToast, toggleEmailVerified } = useApp();
+  const { currentUser, addTrip, setCurrentPage, setSelectedTripId, showToast, refreshEmailVerified, resendVerification } = useApp();
 
   const [villeDepart, setVilleDepart] = useState('');
   const [adresseDepart, setAdresseDepart] = useState('');
@@ -142,13 +142,22 @@ export const ProposerTrajetView: React.FC = () => {
               </p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={toggleEmailVerified}
-            className="shrink-0 bg-red-600 hover:bg-red-500 text-white px-3.5 py-1.5 text-xs font-semibold uppercase rounded-lg transition"
-          >
-            Valider mon email (test)
-          </button>
+          <div className="shrink-0 flex flex-col items-start sm:items-end gap-1.5">
+            <button
+              type="button"
+              onClick={refreshEmailVerified}
+              className="bg-red-600 hover:bg-red-500 text-white px-3.5 py-1.5 text-xs font-semibold uppercase rounded-lg transition"
+            >
+              J'ai cliqué sur le lien
+            </button>
+            <button
+              type="button"
+              onClick={resendVerification}
+              className="text-[11px] underline underline-offset-2 text-slate-300 hover:text-white"
+            >
+              Renvoyer l'email
+            </button>
+          </div>
         </div>
       )}
 

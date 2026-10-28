@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 
 export const ProfilView: React.FC = () => {
-  const { currentUser, updateCurrentUser, toggleEmailVerified, userReviews, showToast } = useApp();
+  const { currentUser, updateCurrentUser, refreshEmailVerified, resendVerification, userReviews, showToast } = useApp();
 
   const [prenom, setPrenom] = useState(currentUser.prenom);
   const [nom, setNom] = useState(currentUser.nom);
@@ -78,12 +78,22 @@ export const ProfilView: React.FC = () => {
           </div>
         </div>
 
-        <button
-          onClick={toggleEmailVerified}
-          className="text-xs bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white border border-white/10 px-3.5 py-1.5 rounded-xl uppercase font-semibold transition"
-        >
-          {currentUser.emailVerified ? 'Simuler email non vérifié' : 'Valider mon email (test)'}
-        </button>
+        {!currentUser.emailVerified && (
+          <div className="flex flex-col sm:items-end gap-1.5">
+            <button
+              onClick={refreshEmailVerified}
+              className="text-xs bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white border border-white/10 px-3.5 py-1.5 rounded-xl uppercase font-semibold transition"
+            >
+              J'ai cliqué sur le lien
+            </button>
+            <button
+              onClick={resendVerification}
+              className="text-[11px] underline underline-offset-2 text-slate-400 hover:text-white"
+            >
+              Renvoyer l'email de confirmation
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
